@@ -24,10 +24,9 @@
     "aurelia-bootstrapper": "^2.2.0",
     "aurelia-animator-css": "^1.0.4",
     "bluebird": "^3.5.1",
-    "aurelia-polyfills": "^1.3.0"
-  },
-  
-  "devDependencies": {
+    "aurelia-polyfills": "^1.3.0",
+
+   
     "dolittle.javascript.build": "github:dolittle/JavaScript.Build.git",
     "html-webpack-plugin": "^3.0.6",
     "copy-webpack-plugin": "^4.5.1",
