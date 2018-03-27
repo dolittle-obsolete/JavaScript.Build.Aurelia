@@ -12,7 +12,7 @@ const ensureArray = (config) => config && (Array.isArray(config) ? config : [con
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 const title = '';
-const outDir = 'wwwroot';
+const outDir = path.resolve('./wwwroot');
 const baseUrl = '/';
 const featureDir = './features';
 const componentDir = './components';
