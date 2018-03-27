@@ -11,13 +11,12 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
-
+const title = '';
 const outDir = 'wwwroot';
 const baseUrl = '/';
 const featureDir = './features';
 const componentDir = './components';
-
-const baseConfig = require('dolittle.javascript.build/webpack.config.js');
+const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
 module.exports = ({ production, server, extractCss, coverage, analyze } = {}) => ({
     resolve: {
