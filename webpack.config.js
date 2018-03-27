@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
@@ -23,11 +24,15 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
         extensions: ['.js'],
         modules: [featureDir, componentDir, 'node_modules']
     },
+
     entry: {
         app: ['aurelia-bootstrapper'],
         vendor: ['bluebird']
     },
+
     mode: production ? 'production' : 'development',
+    devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
+
     output: {
         path: outDir,
         publicPath: baseUrl,
@@ -91,6 +96,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
         })),
         ...when(production, new CopyWebpackPlugin([
             { from: 'static/favicon.ico', to: 'favicon.ico' }])),
-        ...when(analyze, new BundleAnalyzerPlugin())
+        ...when(analyze, new BundleAnalyzerPlugin()),
+        new CleanWebpackPlugin([outDir])
     ]
 });
