@@ -14,8 +14,8 @@ const when = (condition, config, negativeConfig) => condition ? ensureArray(conf
 const title = '';
 const outDir = path.resolve('./wwwroot');
 const baseUrl = '/';
-const featureDir = './features';
-const componentDir = './components';
+const featureDir = './Features';
+const componentDir = './Components';
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
 module.exports = ({ production, server, extractCss, coverage, analyze } = {}) => ({
