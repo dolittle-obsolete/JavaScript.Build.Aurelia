@@ -13,6 +13,7 @@ const ensureArray = (config) => config && (Array.isArray(config) ? config : [con
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 const title = '';
+const rootDir = process.cwd();
 const outDir = path.resolve('./wwwroot');
 const baseUrl = '/';
 const featureDir = './Features';
@@ -72,6 +73,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     },
 
     plugins: [
+        new CleanWebpackPlugin([outDir], { root: rootDir }),
         new AureliaPlugin(),
         new ProvidePlugin({
             'Promise': 'bluebird'
@@ -97,6 +99,6 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
         ...when(production, new CopyWebpackPlugin([
             { from: 'static/favicon.ico', to: 'favicon.ico' }])),
         ...when(analyze, new BundleAnalyzerPlugin()),
-        new CleanWebpackPlugin([outDir])
+        
     ]
 });
