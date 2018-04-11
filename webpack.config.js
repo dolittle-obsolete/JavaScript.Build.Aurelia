@@ -18,8 +18,8 @@ const rootDir = process.cwd();
 const outDir = path.resolve('./wwwroot');
 const baseUrl = '/';
 
-const componentDir = './Components';
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
+
 let featureDir = './Features';
 let componentDir = './Components';
 
