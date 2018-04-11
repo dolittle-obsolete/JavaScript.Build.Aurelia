@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -16,9 +17,19 @@ const title = '';
 const rootDir = process.cwd();
 const outDir = path.resolve('./wwwroot');
 const baseUrl = '/';
-const featureDir = './Features';
+
 const componentDir = './Components';
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
+let featureDir = './Features';
+let componentDir = './Components';
+
+if( !fs.existsSync(path.resolve(featureDir)) ) {
+    featureDir = './features';
+}
+
+if( !fs.existsSync(path.resolve(componentDir)) ) {
+    componentDir = './components';
+}
 
 module.exports = ({ production, server, extractCss, coverage, analyze } = {}) => ({
     resolve: {
@@ -32,7 +43,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     },
 
     mode: production ? 'production' : 'development',
-    devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
+    devtool: production ? 'nosources-source-map' : 'nosources-source-map', //cheap-module-eval-source-map',
 
     output: {
         path: outDir,
