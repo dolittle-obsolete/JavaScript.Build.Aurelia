@@ -23,11 +23,22 @@ const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 let featureDir = './Features';
 let componentDir = './Components';
 
-if( !fs.existsSync(path.resolve(featureDir)) ) {
+function pathExistsCaseSensitiveSync(filepath) {
+    var dir = path.dirname(filepath);
+    if (dir === '/' || dir === '.') return true;
+    var filenames = fs.readdirSync(dir);
+    if (filenames.indexOf(path.basename(filepath)) === -1) {
+        return false;
+    }
+    return pathExistsCaseSensitiveSync(dir);
+}
+
+
+if( !pathExistsCaseSensitiveSync(path.resolve(featureDir)) ) {
     featureDir = './features';
 }
 
-if( !fs.existsSync(path.resolve(componentDir)) ) {
+if( !pathExistsCaseSensitiveSync(path.resolve(componentDir)) ) {
     componentDir = './components';
 }
 
