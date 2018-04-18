@@ -95,7 +95,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     },
 
     plugins: [
-        new CleanWebpackPlugin([outDir], { root: rootDir }),
+        new CleanWebpackPlugin([`${outDir}/**/*.*`], { root: rootDir }),
         new AureliaPlugin(),
         new ProvidePlugin({
             'Promise': 'bluebird'
