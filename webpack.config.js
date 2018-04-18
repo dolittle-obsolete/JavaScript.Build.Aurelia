@@ -20,6 +20,8 @@ const baseUrl = '/';
 
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
+if( !fs.existsSync(outDir) ) fs.mkdirSync(outDir);
+
 let featureDir = './Features';
 let componentDir = './Components';
 
