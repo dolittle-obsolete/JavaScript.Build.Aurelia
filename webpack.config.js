@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
-const { ProvidePlugin } = require('webpack');
+const { ProvidePlugin, WatchIgnorePlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -20,7 +20,7 @@ const baseUrl = '/';
 
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
-if( !fs.existsSync(outDir) ) fs.mkdirSync(outDir);
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
 let featureDir = './Features';
 let componentDir = './Components';
@@ -36,11 +36,11 @@ function pathExistsCaseSensitiveSync(filepath) {
 }
 
 
-if( !pathExistsCaseSensitiveSync(path.resolve(featureDir)) ) {
+if (!pathExistsCaseSensitiveSync(path.resolve(featureDir))) {
     featureDir = './features';
 }
 
-if( !pathExistsCaseSensitiveSync(path.resolve(componentDir)) ) {
+if (!pathExistsCaseSensitiveSync(path.resolve(componentDir))) {
     componentDir = './components';
 }
 
@@ -97,7 +97,12 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     },
 
     plugins: [
-        new CleanWebpackPlugin([`${outDir}/**/*.*`], { root: rootDir }),
+        new CleanWebpackPlugin([`${outDir}/**/*.*`], {  root: rootDir }),
+        new WatchIgnorePlugin([
+            '**/for_*/*.js',
+            '**/when_*/*.js',
+            '**/specs/*.js'
+        ]),
         new AureliaPlugin(),
         new ProvidePlugin({
             'Promise': 'bluebird'
@@ -120,12 +125,12 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
             filename: production ? '[contenthash].css' : '[id].css',
             allChunks: true
         })),
-        
+
         /*
         ...when(production, new CopyWebpackPlugin([
             { from: 'static/favicon.ico', to: 'favicon.ico' }])),*/
-            
+
         ...when(analyze, new BundleAnalyzerPlugin()),
-        
+
     ]
 });
