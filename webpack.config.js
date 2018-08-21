@@ -70,6 +70,16 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     module: {
         rules: [
             {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                issuer: /\.[tj]s$/i
+            },
+            {
+                test: /\.css$/,
+                use: ['css-loader'],
+                issuer: /\.html?$/i
+            },            
+            {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
                 issuer: /\.[tj]s$/i
