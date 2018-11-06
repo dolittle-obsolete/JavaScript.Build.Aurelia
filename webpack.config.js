@@ -13,17 +13,17 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
-const title = '';
-const rootDir = process.cwd();
-const outDir = path.resolve('./wwwroot');
-const baseUrl = '/';
+const title = process.env.DOLITTLE_WEB_TITLE || '';
+const rootDir = process.env.DOLITTLE_WEBPACK_ROOT || process.cwd();
+const outDir = process.env.DOLITTLE_WEBPACK_OUT || path.resolve('./wwwroot');
+const baseUrl = process.env.DOLITTLE_WEBPACK_BASE_URL || '/';
 
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
-let featureDir = './Features';
-let componentDir = './Components';
+let featureDir = process.env.DOLITTLE_FEATURES_DIR || './Features';
+let componentDir = process.env.DOLITTLE_COMPONENT_DIR || './Components';
 
 function pathExistsCaseSensitiveSync(filepath) {
     var dir = path.dirname(filepath);
