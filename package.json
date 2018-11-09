@@ -1,5 +1,5 @@
 {
-  "name": "dolittle.javascript.build.aurelia",
+  "name": "@dolittle/build.aurelia",
   "version": "1.0.0",
   "description": "Build pipeline for Aurelia based JavaScript applications",
   "main": "index.js",
