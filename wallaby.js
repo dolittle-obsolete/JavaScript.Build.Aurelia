@@ -1,8 +1,8 @@
 const AureliaPlugin = require('aurelia-webpack-plugin').AureliaPlugin;
 const DefinePlugin = require('webpack').DefinePlugin;
 
-const wallaby = require('dolittle.javascript.build/wallaby')
-const setupFile = 'node_modules/dolittle.javascript.build.aurelia/aureliaSetup.js';
+const wallaby = require('@dolittle/build/wallaby')
+const setupFile = 'node_modules/@dolittle/build.aurelia/aureliaSetup.js';
 
 module.exports = (baseFolder, webpackPostprocessorCallback, wallabySetingsCallback) => {
     if( !baseFolder ) baseFolder = 'features';
