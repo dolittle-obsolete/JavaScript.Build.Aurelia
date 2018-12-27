@@ -47,7 +47,7 @@ if (!pathExistsCaseSensitiveSync(path.resolve(componentDir))) {
 module.exports = ({ production, server, extractCss, coverage, analyze } = {}) => ({
     resolve: {
         extensions: ['.js'],
-        modules: [featureDir, componentDir, 'node_modules']
+        modules: [path.resolve(featureDir), path.resolve(componentDir), 'node_modules']
     },
 
     entry: {
@@ -91,7 +91,9 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
             },
             { test: /\.html$/i, loader: 'html-loader' },
             {
-                test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir,
+                test: /\.js$/i, 
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel-loader',              
                 options: coverage ? { sourceMap: 'inline', plugins: ['istanbul'] } : {}
             },
             { test: /\.json$/i, loader: 'json-loader' },
