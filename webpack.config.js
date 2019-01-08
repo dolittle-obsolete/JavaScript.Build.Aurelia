@@ -59,6 +59,10 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
     mode: production ? 'production' : 'development',
     devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
 
+    devServer: {
+        historyApiFallback: true
+    },
+
     output: {
         path: outDir,
         publicPath: baseUrl,

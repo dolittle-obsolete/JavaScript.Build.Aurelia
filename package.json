@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/build.aurelia",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Build pipeline for Aurelia based JavaScript applications",
   "main": "index.js",
   "scripts": {
