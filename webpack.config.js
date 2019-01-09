@@ -105,7 +105,6 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
                 loader: 'babel-loader',
                 options: babelConfig
             },
-            { test: /\.json$/i, loader: 'json-loader' },
             // use Bluebird as the global Promise implementation:
             { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
             // embed small images and fonts as Data Urls and larger ones as files:
