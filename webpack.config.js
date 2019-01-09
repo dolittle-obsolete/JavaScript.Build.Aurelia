@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const babelConfigLoader = require('@dolittle/build/dist/babelConfigLoader').default;
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -44,7 +46,9 @@ if (!pathExistsCaseSensitiveSync(path.resolve(componentDir))) {
     componentDir = './components';
 }
 
-module.exports = ({ production, server, extractCss, coverage, analyze } = {}) => ({
+const babelConfig = babelConfigLoader(process.cwd());
+
+module.exports = ({ production, server, extractCss, analyze } = {}) => ({
     resolve: {
         extensions: ['.js'],
         modules: [path.resolve(featureDir), path.resolve(componentDir), 'node_modules'],
@@ -99,7 +103,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze } = {}) =>
                 test: /\.js$/i, 
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
-                options: coverage ? { sourceMap: 'inline', plugins: ['istanbul'] } : {}
+                options: babelConfig
             },
             { test: /\.json$/i, loader: 'json-loader' },
             // use Bluebird as the global Promise implementation:
