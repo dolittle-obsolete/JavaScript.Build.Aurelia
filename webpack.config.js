@@ -50,6 +50,7 @@ const babelConfig = babelConfigLoader(process.cwd());
 
 module.exports = ({ production, server, extractCss, analyze } = {}) => ({
     resolve: {
+        symlinks: false,
         extensions: ['.js'],
         modules: [path.resolve(featureDir), path.resolve(componentDir), 'node_modules'],
         mainFields: ['main', 'module']
