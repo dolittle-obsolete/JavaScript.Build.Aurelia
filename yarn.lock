@@ -658,10 +658,10 @@
   dependencies:
     doctrine "^3.0.0"
 
-"@dolittle/build@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@dolittle/build/-/build-6.2.0.tgz#70bc143b8820c094a03dc4f1046f6834ad738cd7"
-  integrity sha512-8ljQcne4phtuTKHag/yN4LHhrvvHgP/Y0aPbVEtaXBhnka7YHKoXg9flb73NUaIsLYltOBBjQoBxGoVQbVgg5A==
+"@dolittle/build@^6.3.3":
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/@dolittle/build/-/build-6.3.3.tgz#9e41e368beeaf1944ef1df787a8a04da764875de"
+  integrity sha512-6Zga38xnrbxyJauxTXgK2LR1b1rS4KsZogbuFpyll9CP350pgCUxpLVKn7ZSyj7nEafyimOlX9hbl46ycal+rw==
   dependencies:
     "@babel/cli" "^7.2.0"
     "@babel/core" "^7.2.2"
