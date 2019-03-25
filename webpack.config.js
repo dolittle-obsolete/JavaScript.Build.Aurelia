@@ -12,8 +12,8 @@ const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plu
 const { ProvidePlugin, WatchIgnorePlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
-const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
+const ensureArray = config => (config && (Array.isArray(config) ? config : [config])) || [];
+const when = (condition, config, negativeConfig) => (condition ? ensureArray(config) : ensureArray(negativeConfig));
 
 const title = process.env.DOLITTLE_WEB_TITLE || '';
 const rootDir = process.env.DOLITTLE_WEBPACK_ROOT || process.cwd();
@@ -36,7 +36,6 @@ function pathExistsCaseSensitiveSync(filepath) {
     }
     return pathExistsCaseSensitiveSync(dir);
 }
-
 
 if (!pathExistsCaseSensitiveSync(path.resolve(featureDir))) {
     featureDir = './features';
@@ -88,15 +87,34 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
                 test: /\.css$/,
                 use: ['css-loader'],
                 issuer: /\.html?$/i
-            },            
+            },
             {
                 test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [require('autoprefixer')()]
+                        }
+                    },
+                    'sass-loader'
+                ],
                 issuer: /\.[tj]s$/i
             },
             {
                 test: /\.scss$/,
-                use: ['css-loader', 'sass-loader'],
+                use: [
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [require('autoprefixer')()]
+                        }
+                    },
+                    'sass-loader'
+                ],
                 issuer: /\.html?$/i
             },
             { test: /\.html$/i, loader: 'html-loader' },
@@ -118,40 +136,42 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
     },
 
     plugins: [
-        new CleanWebpackPlugin([`${outDir}/**/*.*`], {  root: rootDir }),
-        new WatchIgnorePlugin([
-            '**/for_*/*.js',
-            '**/when_*/*.js',
-            '**/specs/*.js'
-        ]),
+        new CleanWebpackPlugin([`${outDir}/**/*.*`], { root: rootDir }),
+        new WatchIgnorePlugin(['**/for_*/*.js', '**/when_*/*.js', '**/specs/*.js']),
         new AureliaPlugin(),
         new ProvidePlugin({
-            'Promise': 'bluebird'
+            Promise: 'bluebird'
         }),
         new ModuleDependenciesPlugin({
             'aurelia-testing': ['./compile-spy', './view-spy']
         }),
         new HtmlWebpackPlugin({
             template: 'index.ejs',
-            minify: production ? {
-                removeComments: true,
-                collapseWhitespace: true
-            } : undefined,
+            minify: production
+                ? {
+                      removeComments: true,
+                      collapseWhitespace: true
+                  }
+                : undefined,
             metadata: {
                 // available in index.ejs //
-                title, server, baseUrl
+                title,
+                server,
+                baseUrl
             }
         }),
-        ...when(extractCss, new ExtractTextPlugin({
-            filename: production ? '[contenthash].css' : '[id].css',
-            allChunks: true
-        })),
+        ...when(
+            extractCss,
+            new ExtractTextPlugin({
+                filename: production ? '[contenthash].css' : '[id].css',
+                allChunks: true
+            })
+        ),
 
         /*
         ...when(production, new CopyWebpackPlugin([
             { from: 'static/favicon.ico', to: 'favicon.ico' }])),*/
 
-        ...when(analyze, new BundleAnalyzerPlugin()),
-
+        ...when(analyze, new BundleAnalyzerPlugin())
     ]
 });
