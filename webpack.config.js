@@ -136,7 +136,7 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
     },
 
     plugins: [
-        new CleanWebpackPlugin([`${outDir}/**/*.*`], { root: rootDir }),
+        new CleanWebpackPlugin([`${outDir}/**/*.*`], { root: outDir }),
         new WatchIgnorePlugin(['**/for_*/*.js', '**/when_*/*.js', '**/specs/*.js']),
         new AureliaPlugin(),
         new ProvidePlugin({
