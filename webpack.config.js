@@ -4,7 +4,6 @@ const fs = require('fs');
 const babelConfigLoader = require('@dolittle/build/dist/babelConfigLoader').default;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -15,16 +14,16 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ensureArray = config => (config && (Array.isArray(config) ? config : [config])) || [];
 const when = (condition, config, negativeConfig) => (condition ? ensureArray(config) : ensureArray(negativeConfig));
 
-const title = process.env.DOLITTLE_WEB_TITLE || '';
-const rootDir = process.env.DOLITTLE_WEBPACK_ROOT || process.cwd();
+const title = process.env.DOLITTLE_WEB_TITLE || '';
+const rootDir = process.env.DOLITTLE_WEBPACK_ROOT || process.cwd();
 const outDir = process.env.DOLITTLE_WEBPACK_OUT || path.resolve('./wwwroot');
-const baseUrl = process.env.DOLITTLE_WEBPACK_BASE_URL || '/';
+const baseUrl = process.env.DOLITTLE_WEBPACK_BASE_URL || '/';
 
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
-let featureDir = process.env.DOLITTLE_FEATURES_DIR || './Features';
+let featureDir = process.env.DOLITTLE_FEATURES_DIR || './Features';
 let componentDir = process.env.DOLITTLE_COMPONENT_DIR || './Components';
 
 function pathExistsCaseSensitiveSync(filepath) {
@@ -119,7 +118,7 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
             },
             { test: /\.html$/i, loader: 'html-loader' },
             {
-                test: /\.js$/i, 
+                test: /\.js$/i,
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
                 options: babelConfig
@@ -167,11 +166,6 @@ module.exports = ({ production, server, extractCss, analyze } = {}) => ({
                 allChunks: true
             })
         ),
-
-        /*
-        ...when(production, new CopyWebpackPlugin([
-            { from: 'static/favicon.ico', to: 'favicon.ico' }])),*/
-
         ...when(analyze, new BundleAnalyzerPlugin())
     ]
 });
